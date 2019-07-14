@@ -1,0 +1,84 @@
+.MODEL SMALL
+.STACK 100H    
+.DATA
+MSG1 DB 'STRING: $'
+MSG2 DB 'REVERSED: $'
+
+.CODE
+
+    MAIN PROC 
+        
+        MOV AX,@DATA
+        MOV DS,AX
+        
+        LEA DX,MSG1
+        MOV AH,9
+        INT 21H
+        
+        XOR CX,CX
+        MOV AH,1
+        INT 21H
+
+WHILE_:        
+        CMP AL,0DH
+        JE END_WHILE  
+        
+        PUSH AX
+        INC CX
+        INT 21H
+        JMP WHILE_  
+        
+
+        
+END_WHILE:
+        
+        
+        MOV AH,2
+        MOV DL,0DH
+        INT 21H
+        MOV DL,0AH
+        INT 21H  
+        
+        LEA DX,MSG2
+        MOV AH,9
+        INT 21H 
+        
+        JCXZ EXIT
+        
+TOP:    
+
+        
+        POP AX
+        
+        CMP AL,32
+        JE P
+        CMP AL,45
+        JE P   
+        CMP AL,33
+        JE P
+        CMP AL,44
+        JE P  
+        CMP AL,36
+        JE P
+        CMP AL,40
+        JE P
+        CMP AL,41
+        JE P
+        CMP AL,46
+        JE P
+        
+        MOV AH,2
+        MOV DL,AL    
+        INT 21H
+P:
+ 
+        LOOP TOP
+        
+EXIT:
+    
+        MOV AH,4CH
+        INT 21H
+        
+        MAIN ENDP
+    
+  END MAIN

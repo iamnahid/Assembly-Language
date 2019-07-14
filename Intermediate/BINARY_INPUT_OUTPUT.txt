@@ -1,0 +1,89 @@
+.MODEL SMALL
+.STACK 100H
+.DATA
+X DW ?
+.CODE
+
+MAIN PROC
+    
+    MOV BL,0 
+    MOV X,0
+    
+    MOV AH,1
+    INT 21H
+    
+WHILE:
+
+    CMP AL,0DH
+    JE CONT
+    
+    AND AL,0FH
+    SHL BX,1
+    
+    OR BL,AL
+    
+    INT 21H
+    
+    INC X
+    JMP WHILE  
+    
+    
+    
+    
+CONT:
+  
+    MOV CX,16  
+    
+    
+WHILE2:
+    
+    CMP CX,X
+    JE CONT2
+    
+    DEC CX
+    ROL BX,1
+    
+    JMP WHILE2
+    
+
+CONT2:        
+    
+    MOV AH,2
+    MOV DL,0DH
+    INT 21H
+    MOV DL,0AH
+    INT 21H
+
+
+FOR:
+    
+     
+    ROL BX,1 
+    JC P_1 
+    
+    MOV AH,2
+    
+    MOV DL,'0'
+    INT 21H
+    
+    LOOP FOR  
+    
+    JMP END
+    
+P_1:
+    MOV AH,2
+    
+    MOV DL,'1'
+    INT 21H
+
+    LOOP FOR    
+    
+    
+        
+    
+END:
+    MOV AH,4CH
+    INT 21H
+    
+    MAIN ENDP
+END MAIN          

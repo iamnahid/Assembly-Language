@@ -1,0 +1,115 @@
+.MODEL SMALL
+.STACK 100H
+.DATA
+
+MSG DB 'Enter 1ST number: $'
+MSG1 DB 'Enter 2ND number: $'
+MSG2 DB 'Enter 3RD number: $'
+MSG3 DB 'Calculation of: $'
+MSG4 DB ', $'
+MSG5 DB ' AND $'
+MSG6 DB ' IS: $'
+
+.CODE
+    
+    MAIN PROC
+        
+        MOV AX,@DATA
+        MOV DS,AX
+        
+        
+        LEA DX,MSG
+        MOV AH,9
+        INT 21H
+        
+        
+        MOV AH,1
+        INT 21H
+        MOV BL,AL
+        
+        
+        MOV AH,2
+        MOV DL,0DH
+        INT 21H
+        MOV DL,0AH
+        INT 21H
+        
+        
+        LEA DX,MSG1
+        MOV AH,9
+        INT 21H
+        
+        MOV AH,1
+        INT 21H
+        MOV BH,AL
+        
+        
+        
+        MOV AH,2
+        MOV DL,0DH
+        INT 21H
+        MOV DL,0AH
+        INT 21H
+        
+        
+        LEA DX,MSG2
+        MOV AH,9
+        INT 21H
+        
+        
+        MOV AH,1
+        INT 21H
+        MOV CL,AL
+        
+                
+        MOV AH,2
+        MOV DL,0DH
+        INT 21H
+        MOV DL,0AH
+        INT 21H
+        
+        
+        LEA DX,MSG3
+        MOV AH,9
+        INT 21H
+        
+        MOV AH,2
+        MOV DL,BL
+        INT 21H
+        
+        LEA DX,MSG4
+        MOV AH,9
+        INT 21H     
+        
+        MOV AH,2
+        MOV DL,BH
+        INT 21H
+        
+        LEA DX,MSG5
+        MOV AH,9
+        INT 21H
+        
+        MOV AH,2
+        MOV DL,CL 
+        MOV CH,BL
+        ADD CH,BH
+        SUB CH,CL
+        INT 21H
+        
+        LEA DX,MSG6
+        MOV AH,9
+        INT 21H
+        
+        MOV AH,2 
+        MOV DL,CH
+        INT 21H
+         
+        MOV AH,4CH
+        INT 21H 
+        
+        
+        MAIN ENDP
+    
+    END MAIN
+        
+        

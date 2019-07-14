@@ -1,0 +1,31 @@
+.MODEL SMALL
+.STACK 100H
+.CODE
+
+
+MAIN PROC
+    
+    XOR BX,BX
+    MOV AH,1
+    INT 21H
+    
+    
+WHILE_:
+    
+    CMP AL,0DH
+    JE END_WHILE
+    AND AL,0FH
+    SHL BX,1
+    OR BL,AL
+    INT 21H
+    JMP WHILE_
+    
+END_WHILE:
+
+    MOV AH,4CH
+    INT 21H
+    
+    
+    MAIN ENDP
+
+END MAIN

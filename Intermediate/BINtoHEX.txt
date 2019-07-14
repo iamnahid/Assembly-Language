@@ -1,0 +1,91 @@
+.MODEL SMALL
+.STACK 100H
+.DATA
+X DW ?
+MSG1 DB 'BINARY INPUT:  $'
+
+.CODE
+
+MAIN PROC
+    
+    MOV AX,@DATA
+    MOV DS,AX
+    
+    MOV BL,0 
+    MOV X,0
+            
+    LEA DX,MSG1
+    MOV AH,9
+    INT 21H
+            
+    MOV AH,1
+    INT 21H
+    
+WHILE:
+
+    CMP AL,0DH
+    JE CONT
+    
+    AND AL,0FH
+    SHL BX,1
+    
+    OR BL,AL
+    
+    INT 21H
+    
+    INC X
+    JMP WHILE  
+    
+    
+    
+    
+CONT:
+  
+    MOV CX,4 
+    
+    MOV AH,2
+    MOV DL,0DH
+    INT 21H
+    MOV DL,0AH
+    INT 21H
+    
+    
+   
+    
+FOR:
+    MOV DL,BH 
+    
+    SHR DL,4 
+    
+    CMP DL,9
+    JG LET2
+    
+    OR DL,30H
+    JMP CONT2
+    
+    
+LET2:
+    ADD DL,37H
+    JMP CONT2 
+    
+    
+CONT2: 
+
+     
+    MOV AH,2
+    INT 21H
+    
+    ROL BX,4
+    
+    LOOP FOR
+    
+                 
+    
+ 
+    
+END:
+    MOV AH,4CH
+    INT 21H
+    
+    MAIN ENDP
+END MAIN 
